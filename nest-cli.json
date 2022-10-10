@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json.schemastore.org/nest-cli",
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "apps/demand/src",
+  "monorepo": true,
+  "root": "apps/demand",
+  "compilerOptions": {
+    "webpack": true,
+    "tsConfigPath": "apps/demand/tsconfig.app.json"
+  },
+  "projects": {
+    "cloud-services-topics": {
+      "type": "application",
+      "root": "apps/demand",
+      "entryFile": "main",
+      "sourceRoot": "apps/demand/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/demand/tsconfig.app.json"
+      }
+    },
+    "scaler": {
+      "type": "application",
+      "root": "apps/scaler",
+      "entryFile": "main",
+      "sourceRoot": "apps/scaler/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/scaler/tsconfig.app.json"
+      }
+    },
+    "mqtt-gateway": {
+      "type": "application",
+      "root": "apps/mqtt-gateway",
+      "entryFile": "main",
+      "sourceRoot": "apps/mqtt-gateway/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/mqtt-gateway/tsconfig.app.json"
+      }
+    }
+  }
+}
