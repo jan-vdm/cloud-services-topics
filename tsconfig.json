@@ -17,6 +17,19 @@
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
-    "paths": {}
+    "paths": {
+      "@topics/common": [
+        "libs/common/src"
+      ],
+      "@topics/common/*": [
+        "libs/common/src/*"
+      ],
+      "@topics/mqtt": [
+        "libs/mqtt/src"
+      ],
+      "@topics/mqtt/*": [
+        "libs/mqtt/src/*"
+      ]
+    }
   }
 }

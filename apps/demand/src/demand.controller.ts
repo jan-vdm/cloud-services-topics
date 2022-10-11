@@ -1,12 +1,18 @@
-import { Controller, Get } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { DemandService } from './demand.service';
+
+type CreateDemandDto = {
+  quantity: number;
+};
 
 @Controller()
 export class DemandController {
-  constructor(private readonly appService: DemandService) {}
+  constructor(private readonly demandService: DemandService) {}
 
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  @Post('/demand')
+  async createDemand(@Body() createDemandDto: CreateDemandDto) {
+    console.log(`create demand ${createDemandDto.quantity}`);
+    await this.demandService.createDemand(createDemandDto.quantity);
+    return;
   }
 }

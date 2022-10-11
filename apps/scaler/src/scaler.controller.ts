@@ -1,12 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
-import { ScalerService } from './scaler.service';
+import { Controller } from '@nestjs/common';
 
 @Controller()
-export class ScalerController {
-  constructor(private readonly scalerService: ScalerService) {}
-
-  @Get()
-  getHello(): string {
-    return this.scalerService.getHello();
-  }
-}
+export class ScalerController {}

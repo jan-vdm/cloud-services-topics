@@ -35,6 +35,24 @@
       "compilerOptions": {
         "tsConfigPath": "apps/mqtt-gateway/tsconfig.app.json"
       }
+    },
+    "common": {
+      "type": "library",
+      "root": "libs/common",
+      "entryFile": "index",
+      "sourceRoot": "libs/common/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/common/tsconfig.lib.json"
+      }
+    },
+    "mqtt": {
+      "type": "library",
+      "root": "libs/mqtt",
+      "entryFile": "index",
+      "sourceRoot": "libs/mqtt/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/mqtt/tsconfig.lib.json"
+      }
     }
   }
 }

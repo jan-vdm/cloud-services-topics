@@ -1,0 +1,47 @@
+version: "3.9"
+services:
+  demand:
+    build:
+      context: .
+      dockerfile: ./apps/demand/Dockerfile
+    networks:
+      app_subnet:
+        ipv4_address: 10.5.0.4
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mqtt
+  scaler:
+    build:
+      context: .
+      dockerfile: ./apps/scaler/Dockerfile
+    networks:
+      app_subnet:
+        ipv4_address: 10.5.0.3
+    depends_on:
+      - mqtt
+  mqtt:
+    image: eclipse-mosquitto
+    networks:
+      app_subnet:
+        ipv4_address: 10.5.0.2
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    volumes:
+      - ./data/mqtt/config:/mosquitto/config
+      - ./data/mqtt/data:/mosquitto/data
+      - ./data/mqtt/log:/mosquitto/log
+  db:
+    image: postgres
+    networks:
+      app_subnet:
+          ipv4_address: 10.5.0.5
+
+networks:
+  app_subnet:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.5.0.0/16
+          gateway: 10.5.0.1
