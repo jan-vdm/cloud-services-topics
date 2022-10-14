@@ -27,15 +27,6 @@
         "tsConfigPath": "apps/scaler/tsconfig.app.json"
       }
     },
-    "mqtt-gateway": {
-      "type": "application",
-      "root": "apps/mqtt-gateway",
-      "entryFile": "main",
-      "sourceRoot": "apps/mqtt-gateway/src",
-      "compilerOptions": {
-        "tsConfigPath": "apps/mqtt-gateway/tsconfig.app.json"
-      }
-    },
     "common": {
       "type": "library",
       "root": "libs/common",
@@ -52,6 +43,24 @@
       "sourceRoot": "libs/mqtt/src",
       "compilerOptions": {
         "tsConfigPath": "libs/mqtt/tsconfig.lib.json"
+      }
+    },
+    "monitor": {
+      "type": "application",
+      "root": "apps/monitor",
+      "entryFile": "main",
+      "sourceRoot": "apps/monitor/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/monitor/tsconfig.app.json"
+      }
+    },
+    "prisma": {
+      "type": "library",
+      "root": "libs/prisma",
+      "entryFile": "index",
+      "sourceRoot": "libs/prisma/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/prisma/tsconfig.lib.json"
       }
     }
   }

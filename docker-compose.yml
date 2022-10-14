@@ -37,6 +37,14 @@ services:
     networks:
       app_subnet:
           ipv4_address: 10.5.0.5
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: db
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
 
 networks:
   app_subnet:

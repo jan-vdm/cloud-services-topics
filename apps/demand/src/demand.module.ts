@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
+import { MqttModule } from '@topics/mqtt';
 import { DemandController } from './demand.controller';
 import { DemandService } from './demand.service';
-import { MqttModule } from '@topics/mqtt';
 
 @Module({
   imports: [MqttModule],

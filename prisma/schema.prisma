@@ -1,0 +1,62 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Machine {
+  id           Int          @id @default(autoincrement())
+  machineState MachineState
+  line         Line         @relation(fields: [lineId], references: [id])
+
+  lineId Int
+}
+
+model Line {
+  id Int @id @default(autoincrement())
+
+  machines  Machine[]
+  QueueItem QueueItem[]
+}
+
+model QueueItem {
+  line     Line      @relation(fields: [lineId], references: [id])
+  item     OrderItem @relation(fields: [itemId], references: [id])
+  queuedAt DateTime  @default(now())
+  lineId   Int
+  itemId   String
+
+  @@id(fields: [lineId, itemId])
+}
+
+model Order {
+  id    String      @id @default(uuid())
+  items OrderItem[]
+}
+
+model OrderItem {
+  id        String      @id @default(uuid())
+  status    OrderStatus
+  order     Order?      @relation(fields: [orderId], references: [id])
+  orderId   String?
+  QueueItem QueueItem[]
+}
+
+enum OrderStatus {
+  PENDING
+  ASSIGNED
+  EXECUTING
+  DONE
+}
+
+enum MachineState {
+  IDLE
+  WORKING
+  BROKEN
+}

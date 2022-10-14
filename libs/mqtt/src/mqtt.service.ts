@@ -1,14 +1,12 @@
-import {
-  Injectable,
-  OnApplicationBootstrap,
-  OnModuleInit,
-} from '@nestjs/common';
+import { Injectable, OnModuleInit } from '@nestjs/common';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import {
-  ClientSubscribeCallback,
   connect,
   IClientPublishOptions,
+  IClientSubscribeOptions,
+  IPublishPacket,
   MqttClient,
+  OnMessageCallback,
 } from 'mqtt';
 
 @Injectable()
@@ -16,18 +14,21 @@ export class MqttService implements OnModuleInit {
   private mqttClient: MqttClient;
 
   constructor(private readonly eventEmitter: EventEmitter2) {
-    this.eventEmitter.emit('mqtt_connect');
+    setTimeout(() => {
+      this.eventEmitter.emit('mqtt_connect');
+    }, 1000);
   }
 
   onModuleInit() {
     const clientId = `mqtt_${Math.random().toString(16).slice(3)}`;
-    const connectUrl = 'mqtt://192.168.1.133:1883';
-
-    this.mqttClient = connect(connectUrl, {
+    this.mqttClient = connect({
       clientId,
       connectTimeout: 4000,
       reconnectPeriod: 1000,
       clean: true,
+      host: '192.168.1.133',
+      port: 1883,
+      protocol: 'mqtt',
     });
 
     this.mqttClient.on('connect', function () {
@@ -50,7 +51,21 @@ export class MqttService implements OnModuleInit {
     return `Publishing to ${topic}`;
   }
 
-  subscribe(topic: string, callback?: ClientSubscribeCallback) {
-    return this.mqttClient.subscribe(topic, callback);
+  subscribe(
+    topic: string,
+    opts: IClientSubscribeOptions,
+    callback?: OnMessageCallback,
+  ) {
+    console.log(`topic ${topic} has been subscribed to`);
+    const client = this.mqttClient.subscribe(topic, opts);
+    client.on(
+      'message',
+      (mTopic: string, payload: Buffer, packet: IPublishPacket) => {
+        if (topic === mTopic) {
+          callback(mTopic, payload, packet);
+        }
+      },
+    );
+    return client;
   }
 }

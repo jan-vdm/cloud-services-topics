@@ -29,6 +29,12 @@
       ],
       "@topics/mqtt/*": [
         "libs/mqtt/src/*"
+      ],
+      "@topics/prisma": [
+        "libs/prisma/src"
+      ],
+      "@topics/prisma/*": [
+        "libs/prisma/src/*"
       ]
     }
   }
