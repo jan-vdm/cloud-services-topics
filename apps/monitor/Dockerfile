@@ -7,10 +7,11 @@ COPY ../../yarn.lock .
 COPY ../../prisma ./prisma
 COPY ../../.env .
 
+RUN ls -a
 RUN yarn install
-RUN yarn prisma generate
+RUN npx prisma generate
 
-COPY ../../dist/apps/demand .
+COPY ../../dist/apps/monitor .
+COPY ../../dist/libs ../
 
-EXPOSE 3000
 CMD ["node", "main.js"]

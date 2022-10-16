@@ -4,8 +4,11 @@ WORKDIR /app
 
 COPY ../../package.json .
 COPY ../../yarn.lock .
+COPY ../../prisma ./prisma
+COPY ../../.env .
 
 RUN yarn install
+RUN yarn prisma generate
 
 COPY ../../dist/apps/scaler .
 

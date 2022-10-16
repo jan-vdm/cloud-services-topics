@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
-import { Order } from '@topics/common';
+import { EVENT_TOPICS, Order } from '@topics/common';
 import { MqttService } from '@topics/mqtt';
 
 @Injectable()
@@ -11,6 +11,8 @@ export class DemandService {
     const order = Order.fromQuantity(amount);
 
     console.log(order);
-    this.mqttService.publish('order/placed', order.serialize(), { qos: 0 });
+    this.mqttService.publish(EVENT_TOPICS.ORDER_PLACED, order.serialize(), {
+      qos: 0,
+    });
   }
 }

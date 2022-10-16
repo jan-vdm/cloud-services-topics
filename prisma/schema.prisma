@@ -13,9 +13,9 @@ datasource db {
 model Machine {
   id           Int          @id @default(autoincrement())
   machineState MachineState
-  line         Line         @relation(fields: [lineId], references: [id])
+  line         Line?        @relation(fields: [lineId], references: [id])
 
-  lineId Int
+  lineId Int?
 }
 
 model Line {
