@@ -11,28 +11,31 @@ datasource db {
 }
 
 model Machine {
-  id           Int          @id @default(autoincrement())
+  id           Int
   machineState MachineState
   line         Line?        @relation(fields: [lineId], references: [id])
 
-  lineId Int?
+  lineId Int
+  queue  QueueItem[]
+
+  @@id(fields: [id, lineId])
 }
 
 model Line {
   id Int @id @default(autoincrement())
 
-  machines  Machine[]
-  QueueItem QueueItem[]
+  machines Machine[]
 }
 
 model QueueItem {
-  line     Line      @relation(fields: [lineId], references: [id])
-  item     OrderItem @relation(fields: [itemId], references: [id])
-  queuedAt DateTime  @default(now())
-  lineId   Int
-  itemId   String
+  machine   Machine   @relation(references: [id, lineId], fields: [machineId, lineId])
+  item      OrderItem @relation(fields: [itemId], references: [id])
+  queuedAt  DateTime  @default(now())
+  lineId    Int
+  machineId Int
+  itemId    String
 
-  @@id(fields: [lineId, itemId])
+  @@id(fields: [lineId, machineId, itemId])
 }
 
 model Order {

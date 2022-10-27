@@ -1,4 +1,4 @@
-version: "3.9"
+version: "2"
 services:
   demand:
     build:
@@ -27,7 +27,10 @@ services:
     networks:
       app_subnet:
         ipv4_address: 10.5.0.6
+    ports:
+      - "3001:3001"
     depends_on:
+      - db
       - mqtt
   mqtt:
     image: eclipse-mosquitto
@@ -41,8 +44,10 @@ services:
       - ./data/mqtt/config:/mosquitto/config
       - ./data/mqtt/data:/mosquitto/data
       - ./data/mqtt/log:/mosquitto/log
+    depends_on:
+      - db
   db:
-    image: postgres
+    image: postgres:14
     networks:
       app_subnet:
           ipv4_address: 10.5.0.5

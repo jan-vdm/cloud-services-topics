@@ -1,12 +1,23 @@
 import { Controller, Get } from '@nestjs/common';
-import { MonitorService } from './monitor.service';
+import { PrismaService } from '@topics/prisma';
 
 @Controller()
 export class MonitorController {
-  constructor(private readonly monitorService: MonitorService) {}
+  constructor(private readonly prisma: PrismaService) {}
 
   @Get()
-  getHello(): string {
-    return this.monitorService.getHello();
+  async getAll() {
+    const lines = await this.prisma.line.findMany({
+      include: {
+        machines: true,
+      },
+    });
+
+    const items = await this.prisma.queueItem.findMany();
+
+    return {
+      lines,
+      items,
+    };
   }
 }

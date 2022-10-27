@@ -26,7 +26,7 @@ export class MqttService implements OnModuleInit {
       connectTimeout: 4000,
       reconnectPeriod: 1000,
       clean: true,
-      host: '192.168.1.133',
+      host: 'test.mosquitto.org',
       port: 1883,
       protocol: 'mqtt',
     });
@@ -62,6 +62,12 @@ export class MqttService implements OnModuleInit {
       'message',
       (mTopic: string, payload: Buffer, packet: IPublishPacket) => {
         if (topic === mTopic) {
+          callback(mTopic, payload, packet);
+        }
+        if (
+          topic.includes('+') &&
+          topic.split('/')[0] === mTopic.split('/')[0]
+        ) {
           callback(mTopic, payload, packet);
         }
       },
